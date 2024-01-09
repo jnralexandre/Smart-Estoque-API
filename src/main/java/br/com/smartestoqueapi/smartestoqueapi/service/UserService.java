@@ -15,9 +15,9 @@ public class UserService {
 
     private UserRepository userRepository;
 
-    private static final String MENSAGEM_PARA_NOME_EXISTENTE = "O nome de usuário já possuí um cadastro no Banco de Dados";
+    private static final String MENSAGEM_PARA_NOME_EXISTENTE = "O nome de usuário já possui um cadastro no Banco de Dados";
 
-    private static final String MENSAGEM_EMAIL_NOME_EXISTENTE = "O e-mail já possuí um cadastro no Banco de Dados";
+    private static final String MENSAGEM_EMAIL_NOME_EXISTENTE = "O e-mail já possui um cadastro no Banco de Dados";
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -35,12 +35,12 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MENSAGEM_PARA_NOME_EXISTENTE);
         }
 
-        // Verifica se usuário existe pelo seu email
+        // Verifica se usuário existe pelo seu e-mail
         if (usuarioExistentePorEmail != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MENSAGEM_EMAIL_NOME_EXISTENTE);
         }
 
-        // A partir daqui, pode adicionar o usuário no Banco de Dados.
+        // A partir daqui, pode adicionar o usuário no MongoDB
         User usuarioParaAdicionar = UserConverter.converterParaEntidade(userRequestDTO);
         return userRepository.save(usuarioParaAdicionar);
     }
@@ -64,5 +64,4 @@ public class UserService {
     public User entrar(String email, String senha) {
         return userRepository.findByEmailAndSenha(email, senha);
     }
-
 }

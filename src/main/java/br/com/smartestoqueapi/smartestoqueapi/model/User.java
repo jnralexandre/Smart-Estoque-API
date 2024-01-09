@@ -1,23 +1,19 @@
 package br.com.smartestoqueapi.smartestoqueapi.model;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "users")
 @Data
+@NoArgsConstructor
+@Document(collection = "users")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column
-    private String nome;
-    @Column
-    private String email;
-    @Column
-    private String senha;
 
+    @Id
+    private String id;
+    private String nome;
+    private String email;
+    private String senha;
 }
+

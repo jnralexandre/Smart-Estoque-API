@@ -1,6 +1,5 @@
 package br.com.smartestoqueapi.smartestoqueapi.model.dto.converter;
 
-
 import br.com.smartestoqueapi.smartestoqueapi.model.User;
 import br.com.smartestoqueapi.smartestoqueapi.model.dto.UserRequestDTO;
 
@@ -14,5 +13,4 @@ public class UserConverter {
 
         return userEntity;
     }
-
 }
