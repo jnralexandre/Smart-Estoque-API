@@ -32,19 +32,10 @@ public class UserController {
         return ResponseEntity.ok(this.userService.buscarTodosUsuarios());
     }
 
-//    @PostMapping("/entrar")
-//    public ResponseEntity<User> entrar(@RequestBody UserRequestDTO userRequestDTO) {
-//        userService.cadastrarUsuario(userRequestDTO);
-//
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
-
     @PostMapping("/entrar")
     public ResponseEntity<User> entrar(@RequestBody UserRequestDTO userRequestDTO) {
-        // Altere esta linha para chamar o método correto
-        User user = userService.entrar(userRequestDTO.getEmail(), userRequestDTO.getSenha());
+        User user = userService.entrar(userRequestDTO.getEmail(), userRequestDTO.getPassword());
 
-        // Adicione a lógica necessária aqui, por exemplo, retornar o usuário ou um status
         if (user != null) {
             return ResponseEntity.ok(user);
         } else {

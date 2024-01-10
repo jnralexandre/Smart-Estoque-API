@@ -24,23 +24,20 @@ public class UserService {
     }
 
     public User cadastrarUsuario(UserRequestDTO userRequestDTO) {
-        String nomeUsuario = userRequestDTO.getNome();
-        String emailUsuario = userRequestDTO.getEmail();
+        String username = userRequestDTO.getUsername();
+        String email = userRequestDTO.getEmail();
 
-        User usuarioExistentePorNome = buscarUsuarioPorNome(nomeUsuario);
-        User usuarioExistentePorEmail = buscarUsuarioPorEmail(emailUsuario);
+        User usuarioExistentePorUsername = buscarUsuarioPorUsername(username);
+        User usuarioExistentePorEmail = buscarUsuarioPorEmail(email);
 
-        // Verifica se usuário existe pelo seu nome
-        if (usuarioExistentePorNome != null) {
+        if (usuarioExistentePorUsername != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MENSAGEM_PARA_NOME_EXISTENTE);
         }
 
-        // Verifica se usuário existe pelo seu e-mail
         if (usuarioExistentePorEmail != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MENSAGEM_EMAIL_NOME_EXISTENTE);
         }
 
-        // A partir daqui, pode adicionar o usuário no MongoDB
         User usuarioParaAdicionar = UserConverter.converterParaEntidade(userRequestDTO);
         return userRepository.save(usuarioParaAdicionar);
     }
@@ -49,19 +46,19 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User buscarUsuarioPorNome(String nome) {
-        return userRepository.findByNome(nome);
+    public User buscarUsuarioPorUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
     public User buscarUsuarioPorEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
-    public User buscarUsuarioPorPassword(String senha) {
-        return userRepository.findBySenha(senha);
+    public User buscarUsuarioPorPassword(String password) {
+        return userRepository.findByPassword(password);
     }
 
-    public User entrar(String email, String senha) {
-        return userRepository.findByEmailAndSenha(email, senha);
+    public User entrar(String email, String password) {
+        return userRepository.findByEmailAndPassword(email, password);
     }
 }

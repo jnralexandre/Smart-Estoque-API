@@ -5,11 +5,11 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface UserRepository extends MongoRepository<User, String> {
 
-    User findByNome(String nome);
+    User findByUsername(String username);
 
     User findByEmail(String email);
 
-    User findBySenha(String senha);
+    User findByPassword(String password);
 
-    User findByEmailAndSenha(String email, String senha);
+    User findByEmailAndPassword(String email, String password);
 }

@@ -7,9 +7,9 @@ public class UserConverter {
 
     public static User converterParaEntidade(UserRequestDTO userRequestDTO) {
         User userEntity = new User();
-        userEntity.setNome(userRequestDTO.getNome());
+        userEntity.setUsername(userRequestDTO.getUsername());
         userEntity.setEmail(userRequestDTO.getEmail());
-        userEntity.setSenha(userRequestDTO.getSenha());
+        userEntity.setPassword(userRequestDTO.getPassword());
 
         return userEntity;
     }
