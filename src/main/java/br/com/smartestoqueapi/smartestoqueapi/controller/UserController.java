@@ -26,6 +26,11 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @GetMapping("/teste/{id}")
+    public ResponseEntity<User> teste(@PathVariable("id") String username) {
+        return ResponseEntity.ok(this.userService.teste(username));
+    }
+
     @GetMapping("/buscar-usuarios")
     public ResponseEntity<List<User>> buscarTodosUsuarios() {
 

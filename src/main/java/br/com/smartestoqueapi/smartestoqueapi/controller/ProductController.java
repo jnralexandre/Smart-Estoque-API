@@ -33,4 +33,10 @@ public class ProductController {
         return ResponseEntity.ok(this.productService.buscarTodosProdutos());
     }
 
+    @DeleteMapping("/deletar-produtos/{name}")
+    public ResponseEntity<Void> deletarProdutoPorNome(@PathVariable("name") String name) {
+        this.productService.deletarProdutoPorNome(name);
+        return ResponseEntity.accepted().build();
+    }
+
 }
