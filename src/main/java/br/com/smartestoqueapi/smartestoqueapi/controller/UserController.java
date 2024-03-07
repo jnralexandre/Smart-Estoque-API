@@ -2,6 +2,8 @@ package br.com.smartestoqueapi.smartestoqueapi.controller;
 
 import br.com.smartestoqueapi.smartestoqueapi.model.User;
 import br.com.smartestoqueapi.smartestoqueapi.model.dto.UserRequestDTO;
+import br.com.smartestoqueapi.smartestoqueapi.model.dto.UserResponseDTO;
+import br.com.smartestoqueapi.smartestoqueapi.model.dto.converter.UserConverter;
 import br.com.smartestoqueapi.smartestoqueapi.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,4 +50,16 @@ public class UserController {
         }
     }
 
+    @DeleteMapping("/deletar-usuarios/{username}")
+    public ResponseEntity<Void> deletarUsuarioPorUsername(@PathVariable("username") String username) {
+        this.userService.deletarUsuarioPorUsername(username);
+        return ResponseEntity.accepted().build();
+    }
+
+    @PutMapping("/{username}")
+    public ResponseEntity<UserResponseDTO> alterarUsernameEOuEmailPorId(@PathVariable("username") String id,
+                                                                        @RequestBody UserRequestDTO usuarioDTO) {
+        User usuarioAlterado = this.userService.alterarUsernameEOuEmailPorId(id, usuarioDTO);
+        return ResponseEntity.ok(UserConverter.converterParaDTO(usuarioAlterado));
+    }
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -18,6 +19,8 @@ public class UserService {
     private static final String MENSAGEM_PARA_NOME_EXISTENTE = "O nome de usuário já possui um cadastro no Banco de Dados";
 
     private static final String MENSAGEM_EMAIL_NOME_EXISTENTE = "O e-mail já possui um cadastro no Banco de Dados";
+    private static final String MENSAGEM_PARA_USERNAME_INEXISTENTE = "Não é possível deletar um Usuário inexistente.";
+    private static final String MENSAGEM_PARA_ID_INEXISTENTE = "Não é possível alterar um Usuário inexistente.";
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -65,4 +68,44 @@ public class UserService {
     public User entrar(String email, String password) {
         return userRepository.findByEmailAndPassword(email, password);
     }
+
+    public void deletarUsuarioPorUsername(String username) {
+        User usuarioParaDeletar = userRepository.findByUsername(username);
+
+        if (usuarioParaDeletar == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, MENSAGEM_PARA_USERNAME_INEXISTENTE
+            );
+        } else {
+            userRepository.delete(usuarioParaDeletar);
+        }
+    }
+
+    public User alterarUsernameEOuEmailPorId(String id, UserRequestDTO usuarioRequestDTO) {
+        Optional<User> usuarioOptionalParaAlterar = userRepository.findById(id);
+
+        if (usuarioOptionalParaAlterar.isEmpty()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, MENSAGEM_PARA_ID_INEXISTENTE
+            );
+        } else {
+            User usuarioParaAlterar = usuarioOptionalParaAlterar.get();
+            String nameUser = usuarioRequestDTO.getUsername();
+
+            if (nameUser != null) {
+                usuarioParaAlterar.setUsername(nameUser);
+            }
+
+            String email = usuarioRequestDTO.getEmail();
+            if (email != null) {
+                usuarioParaAlterar.setEmail(email);
+            }
+
+            userRepository.save(usuarioParaAlterar);
+
+            return usuarioParaAlterar;
+        }
+
+    }
+
 }

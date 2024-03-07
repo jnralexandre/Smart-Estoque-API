@@ -1,7 +1,6 @@
 package br.com.smartestoqueapi.smartestoqueapi.controller;
 
 import br.com.smartestoqueapi.smartestoqueapi.model.Product;
-import br.com.smartestoqueapi.smartestoqueapi.model.User;
 import br.com.smartestoqueapi.smartestoqueapi.model.dto.ProductRequestDTO;
 import br.com.smartestoqueapi.smartestoqueapi.service.ProductService;
 import org.springframework.http.HttpStatus;
